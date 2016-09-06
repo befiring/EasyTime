@@ -6,6 +6,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.befiring.easytime.R;
 import com.befiring.easytime.bean.PictureResponse.Image;
@@ -56,6 +57,13 @@ public class FirstGridAdapter extends RecyclerView.Adapter<FirstGridAdapter.Firs
         public FirstViewHolder(View itemView) {
             super(itemView);
             ButterKnife.bind(this, itemView);
+            itemView.setOnLongClickListener(new View.OnLongClickListener() {
+                @Override
+                public boolean onLongClick(View view) {
+                    Toast.makeText(imageView.getContext(),"long click",Toast.LENGTH_SHORT).show();
+                    return false;
+                }
+            });
         }
     }
 }

@@ -10,8 +10,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import com.befiring.easytime.R;
+import com.befiring.easytime.Utils.FileUtil;
 import com.befiring.easytime.adapter.FirstGridAdapter;
 import com.befiring.easytime.bean.PictureResponse.Image;
 import com.befiring.easytime.network.Network;
@@ -20,6 +22,7 @@ import java.util.List;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
+import okhttp3.ResponseBody;
 import rx.Observer;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
@@ -41,6 +44,8 @@ public class FirstFragment extends BaseFragment {
     EditText search_et;
     @Bind(R.id.search_btn)
     Button search_btn;
+    @Bind(R.id.download)
+    Button download;
 
     private static FirstFragment instance;
     FirstGridAdapter adapter;
@@ -60,6 +65,24 @@ public class FirstFragment extends BaseFragment {
         public void onNext(List<Image> images) {
             refreshLayout.setRefreshing(false);
             adapter.setImages(images);
+        }
+    };
+
+    Observer<ResponseBody> observer1=new Observer<ResponseBody>() {
+        @Override
+        public void onCompleted() {
+             int a=0;
+        }
+
+        @Override
+        public void onError(Throwable e) {
+             int b=0;
+        }
+
+        @Override
+        public void onNext(ResponseBody responseBody) {
+            Toast.makeText(getActivity(),"下载完成",Toast.LENGTH_SHORT).show();
+            FileUtil.writeResponseBodyToDisk(responseBody);
         }
     };
 
@@ -88,12 +111,23 @@ public class FirstFragment extends BaseFragment {
             }
         });
 
+        download.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                unsubscribe();
+                subscription=Network.getApiService("http://zhuangbi.idagou.com/i/")
+                        .downloadFile()
+                        .subscribeOn(Schedulers.io())
+                        .observeOn(AndroidSchedulers.mainThread())
+                        .subscribe(observer1);
+            }
+        });
+
         return view;
     }
 
     @Override
     public void onDestroyView() {
-//        SMSSDK.unregisterEventHandler(eh);
         super.onDestroyView();
     }
 

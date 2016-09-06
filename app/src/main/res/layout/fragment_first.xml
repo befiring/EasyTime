@@ -22,11 +22,11 @@
             android:layout_margin="10dp"
             android:text="search" />
         <Button
-            android:id="@+id/submit"
+            android:id="@+id/download"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="submit"
+            android:text="download"
             android:layout_margin="10dp"/>
     </LinearLayout>
 
