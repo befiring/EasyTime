@@ -87,4 +87,6 @@ public class SecondFragment extends BaseFragment{
         }
         return instance;
     }
+
+
 }

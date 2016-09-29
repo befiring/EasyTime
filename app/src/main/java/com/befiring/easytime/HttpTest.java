@@ -133,7 +133,7 @@ public class HttpTest {
         JokeResponse response=gson.fromJson(s,JokeResponse.class);
         System.out.println(s);
         System.out.println("-----------");
-        System.out.println(response.getResult().getData().get(0).getContent());
+//        System.out.println(response.getResult().getData().get(0).getContent());
 
 
         

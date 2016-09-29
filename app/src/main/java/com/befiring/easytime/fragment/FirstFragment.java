@@ -98,16 +98,11 @@ public class FirstFragment extends BaseFragment {
         recyclerView.setLayoutManager(new GridLayoutManager(getActivity(), 2));
         recyclerView.setAdapter(adapter);
 
+        search("");
         search_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                unsubscribe();
-                refreshLayout.setRefreshing(true);
-                subscription= Network.getApiService("http://zhuangbi.info/")
-                        .searchPicture(search_et.getText().toString())
-                        .subscribeOn(Schedulers.io())
-                        .observeOn(AndroidSchedulers.mainThread())
-                        .subscribe(observer);
+               search(search_et.getText().toString());
             }
         });
 
@@ -138,5 +133,15 @@ public class FirstFragment extends BaseFragment {
         return instance;
     }
 
+    public void search(String word){
+        String key=word.equals("")||word==null?"装逼":search_et.getText().toString();
+        unsubscribe();
+        refreshLayout.setRefreshing(true);
+        subscription= Network.getApiService("http://zhuangbi.info/")
+                .searchPicture(key)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(observer);
+    }
 
 }

@@ -40,7 +40,7 @@ public class MainActivity extends AppCompatActivity {
         viewPager.setAdapter(new MainViewPagerAdapter(getSupportFragmentManager()));
         tableLayout.setupWithViewPager(viewPager);
 
-        getSupportFragmentManager().beginTransaction().add(R.id.content,firstFragment).show(firstFragment).commit();
+//        getSupportFragmentManager().beginTransaction().add(R.id.content,firstFragment).show(firstFragment).commit();
     }
 
     private void initData(){
@@ -72,9 +72,8 @@ public class MainActivity extends AppCompatActivity {
                 case 1:
                     return "笑话";
                 default:
-                    break;
+                    return "";
             }
-            return super.getPageTitle(position);
         }
     }
 }
